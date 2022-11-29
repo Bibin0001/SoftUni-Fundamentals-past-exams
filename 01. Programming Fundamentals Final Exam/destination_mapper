@@ -1,0 +1,15 @@
+import re
+
+locations = input()
+pattern = r'(\=|\/)([A-Z][a-zA-Z]{2,})\1'
+asd = []
+points = 0
+res = re.findall(pattern, locations)
+if res:
+
+    for i in res:
+        asd.append(i[1])
+        points += len(i[1])
+
+print(f"Destinations: {', '.join(asd)}")
+print(f'Travel Points: {points}')
