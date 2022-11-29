@@ -1,0 +1,16 @@
+import re
+
+string = input()
+pattern = r'(\#|\|)([A-Za-z\s]+)\1(\d{2}\/\d{2}\/\d{2})\1(\d+)\1'
+result = re.findall(pattern, string)
+all_calories = 0
+msg = ''
+if result:
+    for i in result:
+        all_calories += int(i[-1])
+        msg += f'Item: {i[1]}, Best before: {i[2]}, Nutrition: {i[-1]}\n'
+
+
+
+print(f'You have food to last you for: {int(all_calories // 2000)} days!')
+print(msg)
