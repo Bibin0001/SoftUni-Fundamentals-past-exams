@@ -1,0 +1,57 @@
+def add(di, pie, compo, keyy):
+    if pie not in di.keys():
+        di[pie] = [compo, keyy]
+
+        print(f'{pie} by {compo} in {keyy} added to the collection!')
+        return di
+    return print(f'{pie} is already in the collection!')
+
+
+def remove(di, pie):
+    if pie in di:
+        del di[pie]
+
+        print(f'Successfully removed {pie}!')
+        return di
+    return print(f'Invalid operation! {pie} does not exist in the collection.')
+
+
+pieces = {}
+number_of_pieces = int(input())
+
+
+def change_key(dic, pie, key):
+    if pie in dic:
+        dic[pie][1] = key
+
+        print(f'Changed the key of {pie} to {key}!')
+        return dic
+    return print(f'Invalid operation! {pie} does not exist in the collection.')
+
+
+for i in range(number_of_pieces):
+    piece, composer, key = input().split('|')
+    pieces[piece] = [composer, key]
+
+while True:
+    command = input()
+    if command == 'Stop':
+        break
+    a = command.split('|')
+    action, piece = a[0], a[1]
+    if len(a) == 3:
+        new_key = a[2]
+    elif len(a) == 4:
+        composer = a[2]
+        key = a[3]
+
+    if action == 'Add':
+        add(pieces, piece, composer, key)
+    elif action == 'Remove':
+        remove(pieces, piece)
+    elif action == 'ChangeKey':
+        change_key(pieces, piece, new_key)
+
+for k, v in pieces.items():
+    print(f'{k} -> Composer: {v[0]}, Key: {v[1]}')
+
