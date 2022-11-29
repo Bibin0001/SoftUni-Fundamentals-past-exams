@@ -1,0 +1,36 @@
+number_of_plants = int(input())
+plants = {}
+for _ in range(number_of_plants):
+    plant, rarity = input().split('<->')
+    if plant not in plants:
+        plants[plant] = [rarity]
+    plants[plant] = [rarity]
+
+while True:
+    command = input()
+    if command == 'Exhibition':
+        break
+    a = command.split()
+    action = a[0]
+    plant = a[1]
+    if plant not in plants:
+        print('error')
+        continue
+
+    if action == 'Rate:':
+        rating = int(a[-1])
+        plants[plant].append(rating)
+
+    elif action == 'Update:':
+        rarity = a[-1]
+        plants[plant][0] = rarity
+
+    elif action == 'Reset:':
+        plants[plant][1:] = []
+print('Plants for the exhibition:')
+for k, v in plants.items():
+    rate = [int(x) for x in v[1:]]
+    if rate:
+        print(f'- {k}; Rarity: {v[0]}; Rating: {sum(rate) / len(rate):.2f}')
+    else:
+        print(f'- {k}; Rarity: {v[0]}; Rating: 0.00')
