@@ -1,0 +1,64 @@
+number_of_heroes = int(input())
+heroes = {}
+
+for _ in range(number_of_heroes):
+    command = input().split()
+    heroes[command[0]] = [int(command[1]), int(command[2])]
+
+# heroes = index 0 = HP, index 1 = MP
+
+while True:
+    command = input().split(' - ')
+    action = command[0]
+    if action == 'End':
+        break
+    hero = command[1]
+
+    if action == 'CastSpell':
+        mp_needed = int(command[2])
+        spell = command[3]
+        if heroes[hero][1] >= mp_needed:
+            heroes[hero][1] -= mp_needed
+            print(f"{hero} has successfully cast {spell} and now has {heroes[hero][1]} MP!")
+        else:
+            print(f"{hero} does not have enough MP to cast {spell}!")
+
+
+    elif action == 'TakeDamage':
+        damage = int(command[2])
+        attacker = command[3]
+        heroes[hero][0] -= damage
+        if heroes[hero][0] > 0:
+            print(f"{hero} was hit for {damage} HP by {attacker} and now has {heroes[hero][0]} HP left!")
+        else:
+            print(f"{hero} has been killed by {attacker}!")
+            del heroes[hero]
+
+    elif action == 'Recharge':
+        amount = int(command[-1])
+        recharged = heroes[hero][1] + amount
+        if recharged > 200:
+            recharged = 200 - heroes[hero][1]
+            print(f"{hero} recharged for {recharged} MP!")
+            heroes[hero][1] = 200
+        else:
+            print(f"{hero} recharged for {amount} MP!")
+            heroes[hero][1] = recharged
+
+    elif action == 'Heal':
+        amount = int(command[-1])
+        recharged = heroes[hero][0] + amount
+        if recharged > 100:
+            recharged = 100 - heroes[hero][0]
+            print(f"{hero} healed for {recharged} HP!")
+            heroes[hero][0] = 100
+        else:
+            print(f"{hero} healed for {amount} HP!")
+            heroes[hero][0] = recharged
+
+
+
+for i in heroes:
+    print(i)
+    print(f'  HP: {heroes[i][0]}')
+    print(f'  MP: {heroes[i][1]}')
