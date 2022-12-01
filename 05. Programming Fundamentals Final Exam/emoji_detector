@@ -1,0 +1,33 @@
+import re
+
+line = input()
+cool_threshold = 1
+emojis = []
+cool_emojis = []
+
+numbers = re.findall(r'\d', line)
+if numbers:
+    for i in numbers:
+        cool_threshold *= int(i)
+else:
+    cool_threshold = 0
+
+
+pattern = r'(\:\:|\*\*)([A-Z][a-z]{2,})\1'
+found_emojis = re.finditer(pattern, line)
+for i in found_emojis:
+    full_emoji = i.group(1) + i.group(2) + i.group(1)
+    emoji = i.group(2)
+    coolness = 0
+    for b in emoji:
+        coolness += ord(b)
+    if coolness >= cool_threshold:
+        cool_emojis.append(full_emoji)
+        emojis.append(full_emoji)
+    else:
+        emojis.append(full_emoji)
+
+print(f'Cool threshold: {cool_threshold}')
+print(f'{len(emojis)} emojis found in the text. The cool ones are:')
+for i in cool_emojis:
+    print(i)
